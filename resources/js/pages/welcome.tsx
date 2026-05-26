@@ -1,8 +1,42 @@
-import { Head, Link, usePage } from '@inertiajs/react';
+import { Head, Link, useForm, usePage } from '@inertiajs/react';
+import { FormEvent, useState } from 'react';
+import { store as storeRsvp } from '@/actions/App/Http/Controllers/RsvpController';
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogHeader,
+    DialogTitle,
+} from '@/components/ui/dialog';
 import { dashboard } from '@/routes';
+
+type RsvpFormData = {
+    name: string;
+    attending_wedding: '' | '1' | '0';
+    attending_church_service: '' | '1' | '0';
+};
 
 export default function Welcome() {
     const { auth } = usePage().props;
+
+    const [successOpen, setSuccessOpen] = useState(false);
+
+    const form = useForm<RsvpFormData>({
+        name: '',
+        attending_wedding: '',
+        attending_church_service: '',
+    });
+
+    const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        form.post(storeRsvp().url, {
+            preserveScroll: true,
+            onSuccess: () => {
+                form.reset();
+                setSuccessOpen(true);
+            },
+        });
+    };
 
     return (
         <>
@@ -114,9 +148,172 @@ export default function Welcome() {
                                 Sky Blue
                             </span>
                         </p>
+
+                        <RsvpForm form={form} onSubmit={handleSubmit} />
                     </footer>
                 </main>
+
+                <Dialog open={successOpen} onOpenChange={setSuccessOpen}>
+                    <DialogContent
+                        className="border-[#1b1b18]/15 bg-[#f3ece7] sm:max-w-md"
+                        style={{ fontFamily: "'Cormorant Garamond', serif" }}
+                    >
+                        <DialogHeader className="text-center sm:text-center">
+                            <DialogTitle
+                                className="text-center text-5xl font-normal text-[#1b1b18] sm:text-6xl"
+                                style={{ fontFamily: "'Italianno', cursive" }}
+                            >
+                                Success!
+                            </DialogTitle>
+                            <DialogDescription className="text-center text-sm tracking-[0.25em] text-[#1b1b18]/80 uppercase">
+                                See you on our wedding day
+                            </DialogDescription>
+                        </DialogHeader>
+
+                        <div className="mt-2 border-t border-[#1b1b18]/15 pt-5 text-center text-[0.95rem] leading-relaxed tracking-wide text-[#1b1b18]/85">
+                            For the church service, guests may wear any
+                            church-appropriate outfit.
+                        </div>
+
+                        <div className="mt-2 text-center">
+                            <button
+                                type="button"
+                                onClick={() => setSuccessOpen(false)}
+                                className="rounded-full border border-[#1b1b18] bg-[#1b1b18] px-8 py-2.5 text-xs tracking-[0.3em] text-[#f3ece7] uppercase transition hover:bg-transparent hover:text-[#1b1b18]"
+                            >
+                                Close
+                            </button>
+                        </div>
+                    </DialogContent>
+                </Dialog>
             </div>
         </>
+    );
+}
+
+type RsvpFormProps = {
+    form: ReturnType<typeof useForm<RsvpFormData>>;
+    onSubmit: (e: FormEvent<HTMLFormElement>) => void;
+};
+
+function RsvpForm({ form, onSubmit }: RsvpFormProps) {
+    const { data, setData, processing, errors } = form;
+
+    return (
+        <form
+            onSubmit={onSubmit}
+            className="mx-auto mt-16 max-w-xl space-y-8 text-left"
+            style={{ fontFamily: "'Cormorant Garamond', serif" }}
+        >
+            <header className="text-center">
+                <p
+                    className="text-3xl text-[#1b1b18] sm:text-4xl"
+                    style={{ fontFamily: "'Italianno', cursive" }}
+                >
+                    Kindly respond
+                </p>
+            </header>
+
+            <YesNoField
+                label="Will attend the wedding ceremony"
+                name="attending_wedding"
+                value={data.attending_wedding}
+                onChange={(value) => setData('attending_wedding', value)}
+                error={errors.attending_wedding}
+            />
+
+            <div className="space-y-2">
+                <label
+                    htmlFor="rsvp-name"
+                    className="block text-xs tracking-[0.25em] text-[#1b1b18]/80 uppercase"
+                >
+                    Name
+                </label>
+                <input
+                    id="rsvp-name"
+                    type="text"
+                    value={data.name}
+                    onChange={(e) => setData('name', e.target.value)}
+                    autoComplete="name"
+                    className="block w-full border-0 border-b border-[#1b1b18]/30 bg-transparent px-0 py-2 text-base text-[#1b1b18] placeholder-[#1b1b18]/30 focus:border-[#1b1b18] focus:ring-0 focus:outline-none"
+                />
+                {errors.name && (
+                    <p className="text-xs tracking-[0.15em] text-red-700 uppercase">
+                        {errors.name}
+                    </p>
+                )}
+            </div>
+
+            <YesNoField
+                label="Will join the church service before the wedding day"
+                name="attending_church_service"
+                value={data.attending_church_service}
+                onChange={(value) =>
+                    setData('attending_church_service', value)
+                }
+                error={errors.attending_church_service}
+            />
+
+            <div className="pt-2 text-center">
+                <button
+                    type="submit"
+                    disabled={processing}
+                    className="rounded-full border border-[#1b1b18] bg-[#1b1b18] px-10 py-3 text-xs tracking-[0.3em] text-[#f3ece7] uppercase transition hover:bg-transparent hover:text-[#1b1b18] disabled:opacity-60"
+                >
+                    {processing ? 'Sending…' : 'Send RSVP'}
+                </button>
+            </div>
+        </form>
+    );
+}
+
+type YesNoFieldProps = {
+    label: string;
+    name: string;
+    value: '' | '1' | '0';
+    onChange: (value: '1' | '0') => void;
+    error?: string;
+};
+
+function YesNoField({ label, name, value, onChange, error }: YesNoFieldProps) {
+    return (
+        <fieldset className="space-y-3">
+            <legend className="block text-xs tracking-[0.25em] text-[#1b1b18]/80 uppercase">
+                {label}
+            </legend>
+            <div className="flex items-center gap-3">
+                {[
+                    { v: '1' as const, label: 'Yes' },
+                    { v: '0' as const, label: 'No' },
+                ].map((opt) => {
+                    const selected = value === opt.v;
+                    return (
+                        <label
+                            key={opt.v}
+                            className={`flex-1 cursor-pointer rounded-full border px-6 py-2.5 text-center text-xs tracking-[0.25em] uppercase transition ${
+                                selected
+                                    ? 'border-[#1b1b18] bg-[#1b1b18] text-[#f3ece7]'
+                                    : 'border-[#1b1b18]/30 text-[#1b1b18]/70 hover:border-[#1b1b18]/60'
+                            }`}
+                        >
+                            <input
+                                type="radio"
+                                name={name}
+                                value={opt.v}
+                                checked={selected}
+                                onChange={() => onChange(opt.v)}
+                                className="sr-only"
+                            />
+                            {opt.label}
+                        </label>
+                    );
+                })}
+            </div>
+            {error && (
+                <p className="text-xs tracking-[0.15em] text-red-700 uppercase">
+                    {error}
+                </p>
+            )}
+        </fieldset>
     );
 }

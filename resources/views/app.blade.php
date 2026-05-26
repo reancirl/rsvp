@@ -48,24 +48,54 @@
                 pointer-events: none;
             }
 
+            #app-loader .fmn-stage {
+                position: relative;
+                width: 140px;
+                height: 140px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                animation: fmn-float 3.6s ease-in-out infinite;
+            }
+
+            #app-loader .fmn-glow {
+                position: absolute;
+                inset: 0;
+                border-radius: 50%;
+                background: radial-gradient(closest-side, rgba(166,188,220,0.35), rgba(166,188,220,0));
+                animation: fmn-pulse 2.4s ease-in-out infinite;
+            }
+
             #app-loader .fmn-flower {
-                width: 96px;
-                height: 96px;
-                animation: fmn-spin 2.4s linear infinite;
+                width: 110px;
+                height: 110px;
+                animation: fmn-spin 4.2s linear infinite;
                 transform-origin: center;
             }
 
             #app-loader .fmn-flower .petals {
                 transform-origin: center;
-                animation: fmn-breathe 1.8s ease-in-out infinite;
+                animation: fmn-breathe 2.4s ease-in-out infinite;
             }
 
             #app-loader .fmn-label {
                 font-family: 'Italianno', 'Cormorant Garamond', serif;
-                font-size: 1.75rem;
+                font-size: 2rem;
                 letter-spacing: 0.02em;
                 color: #1b1b18;
-                opacity: 0.75;
+                opacity: 0;
+                animation: fmn-fadein 1.2s ease-out 0.4s forwards;
+            }
+
+            #app-loader .fmn-tagline {
+                margin-top: 0.25rem;
+                font-family: 'Cormorant Garamond', serif;
+                font-size: 0.7rem;
+                letter-spacing: 0.4em;
+                text-transform: uppercase;
+                color: rgba(27,27,24,0.55);
+                opacity: 0;
+                animation: fmn-fadein 1.2s ease-out 0.9s forwards;
             }
 
             @keyframes fmn-spin {
@@ -75,7 +105,22 @@
 
             @keyframes fmn-breathe {
                 0%, 100% { transform: scale(1); }
-                50% { transform: scale(0.92); }
+                50% { transform: scale(0.9); }
+            }
+
+            @keyframes fmn-float {
+                0%, 100% { transform: translateY(0); }
+                50% { transform: translateY(-8px); }
+            }
+
+            @keyframes fmn-pulse {
+                0%, 100% { transform: scale(1); opacity: 0.6; }
+                50% { transform: scale(1.25); opacity: 1; }
+            }
+
+            @keyframes fmn-fadein {
+                from { opacity: 0; transform: translateY(6px); }
+                to { opacity: 1; transform: translateY(0); }
             }
         </style>
 
@@ -98,6 +143,8 @@
     </head>
     <body class="font-sans antialiased">
         <div id="app-loader" aria-hidden="true">
+            <div class="fmn-stage">
+                <div class="fmn-glow"></div>
             <svg class="fmn-flower" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
                 <defs>
                     <radialGradient id="loader-petal" cx="50%" cy="50%" r="60%">
@@ -123,7 +170,9 @@
                     <circle r="2.5" fill="#3a2706" opacity="0.55"/>
                 </g>
             </svg>
+            </div>
             <p class="fmn-label">Reancirl &amp; Chermae</p>
+            <p class="fmn-tagline">June 1, 2026 · Iligan City</p>
         </div>
         <script>
             (function () {
@@ -136,10 +185,10 @@
                     }, 700);
                 };
                 if (document.readyState === 'complete') {
-                    setTimeout(hideLoader, 400);
+                    setTimeout(hideLoader, 2400);
                 } else {
                     window.addEventListener('load', function () {
-                        setTimeout(hideLoader, 400);
+                        setTimeout(hideLoader, 2400);
                     });
                 }
             })();
