@@ -244,6 +244,35 @@ function RsvpForm({ form, onSubmit }: RsvpFormProps) {
                 )}
             </div>
 
+            <div
+                className="space-y-4 rounded-2xl border border-[#1b1b18]/15 bg-white/30 px-6 py-7 text-center sm:px-8"
+                style={{ fontFamily: "'Tenor Sans', serif" }}
+            >
+                <p className="text-xs tracking-[0.3em] text-[#1b1b18] uppercase sm:text-sm">
+                    You are invited to join us
+                </p>
+                <p className="text-[0.78rem] leading-relaxed tracking-[0.18em] text-[#1b1b18]/85 uppercase sm:text-[0.85rem]">
+                    As our marriage is centered on Jesus Christ, we would like
+                    to begin this celebration first in church, together in
+                    worship and thanksgiving before our wedding day.
+                </p>
+                <div className="space-y-1 pt-1 tracking-[0.18em] uppercase">
+                    <p className="text-base sm:text-lg">
+                        At 8:30 AM, 31 May 2026
+                    </p>
+                    <p className="text-xs text-[#1b1b18]/80 sm:text-[0.85rem]">
+                        6th Floor, Grand Berlin Hall, Plaza Alemania, Iligan
+                        City
+                    </p>
+                </div>
+                <p
+                    className="pt-2 text-xs tracking-[0.15em] text-[#1b1b18]/65 normal-case sm:text-sm"
+                    style={{ fontFamily: "'Cormorant Garamond', serif" }}
+                >
+                    Guests may wear any church-appropriate attire.
+                </p>
+            </div>
+
             <YesNoField
                 label="Will join the church service before the wedding day"
                 name="attending_church_service"
