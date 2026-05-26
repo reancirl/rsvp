@@ -48,7 +48,7 @@ export default function Welcome() {
                     crossOrigin=""
                 />
                 <link
-                    href="https://fonts.googleapis.com/css2?family=Cormorant:wght@300;400;500&family=Italianno&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&display=swap"
+                    href="https://fonts.googleapis.com/css2?family=Cormorant:wght@300;400;500&family=Italianno&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Tenor+Sans&display=swap"
                     rel="stylesheet"
                 />
             </Head>
@@ -92,8 +92,8 @@ export default function Welcome() {
                     </div>
 
                     <section
-                        className="relative z-10 mt-8 max-w-2xl space-y-6 text-sm leading-relaxed tracking-[0.15em] uppercase sm:mt-10 sm:text-[0.95rem]"
-                        style={{ fontFamily: "'Cormorant Garamond', serif" }}
+                        className="relative z-10 mt-8 max-w-2xl space-y-6 text-sm leading-relaxed tracking-[0.18em] uppercase sm:mt-10 sm:text-[0.95rem]"
+                        style={{ fontFamily: "'Tenor Sans', serif" }}
                     >
                         <p>
                             Request the honour of your presence at the
