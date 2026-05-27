@@ -468,7 +468,7 @@ const entourageSections: EntourageSection[] = [
         title: 'Principal Sponsors',
         layout: 'pairs',
         entries: [
-            ['Mr. Jay C. Ces', 'Mrs. Meredith M. Ces'],
+            ['Mr. Jay C. Ces', 'Mrs. Meridith M. Ces'],
             ['Mr. Freddie Castelo', 'Mrs. Jerah Mae C. Castelo'],
             ['Mr. Dexter Largo', 'Mrs. Joy C. Largo'],
             ['Mr. Ryan Taculod', 'Mrs. Jenny Rose C. Taculod'],
