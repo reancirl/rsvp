@@ -20,6 +20,7 @@ export default function Welcome() {
     const { auth } = usePage().props;
 
     const [successOpen, setSuccessOpen] = useState(false);
+    const [entourageOpen, setEntourageOpen] = useState(false);
 
     const form = useForm<RsvpFormData>({
         name: '',
@@ -114,6 +115,16 @@ export default function Welcome() {
                             <p>61 Venus Street, Rabago Subdivision</p>
                             <p>Barangay Villaverde, Iligan City</p>
                         </div>
+
+                        <div className="pt-2">
+                            <button
+                                type="button"
+                                onClick={() => setEntourageOpen(true)}
+                                className="rounded-full border border-[#1b1b18] px-8 py-2.5 text-xs tracking-[0.3em] text-[#1b1b18] uppercase transition hover:bg-[#1b1b18] hover:text-[#f3ece7]"
+                            >
+                                View Entourage
+                            </button>
+                        </div>
                     </section>
 
                     <footer
@@ -152,6 +163,11 @@ export default function Welcome() {
                         <RsvpForm form={form} onSubmit={handleSubmit} />
                     </footer>
                 </main>
+
+                <EntourageDialog
+                    open={entourageOpen}
+                    onOpenChange={setEntourageOpen}
+                />
 
                 <Dialog open={successOpen} onOpenChange={setSuccessOpen}>
                     <DialogContent
@@ -344,5 +360,226 @@ function YesNoField({ label, name, value, onChange, error }: YesNoFieldProps) {
                 </p>
             )}
         </fieldset>
+    );
+}
+
+type EntourageDialogProps = {
+    open: boolean;
+    onOpenChange: (open: boolean) => void;
+};
+
+type EntourageEntry = string | [string, string] | [string, string, string];
+
+type EntourageSection = {
+    title: string;
+    entries: EntourageEntry[];
+    layout?: 'single' | 'pairs';
+};
+
+const entourageSections: EntourageSection[] = [
+    {
+        title: 'The Couple',
+        entries: [
+            ['Bride', 'Chermae L. Anobling'],
+            ['Groom', 'Reancirl C. Balaba'],
+        ],
+    },
+    {
+        title: 'Pastors',
+        entries: ['Bayani Areola', 'Anjie Areola'],
+    },
+    {
+        title: 'Officiating Pastor',
+        entries: ['To be announced'],
+    },
+    {
+        title: 'Parents of the Bride',
+        entries: ['Artcher O. Anobling', 'Lota Mae L. Anobling'],
+    },
+    {
+        title: 'Parents of the Groom',
+        entries: ['Florencio R. Balaba', 'Charissa Janen C. Balaba'],
+    },
+    {
+        title: 'Siblings',
+        entries: ['Jude Miguel C. Balaba', 'Zaphy L. Anobling'],
+    },
+    {
+        title: 'Best Man',
+        entries: ['Jaeric Miguel C. Balaba'],
+    },
+    {
+        title: 'Maid of Honor',
+        entries: ['Charmine L. Magbanua'],
+    },
+    {
+        title: 'Grandparents',
+        entries: ['Teresita C. Ces'],
+    },
+    {
+        title: 'Ring Bearer',
+        entries: ['Reondel P. Leong'],
+    },
+    {
+        title: 'Bible Bearer',
+        entries: ['Jacob Ryenne C. Taculod'],
+    },
+    {
+        title: 'Coin Bearer',
+        entries: ['Mahkou M. Anobling'],
+    },
+    {
+        title: 'Flower Girls',
+        entries: [
+            'Ariane Tj E. Obedencio',
+            'Bethel Praise T. Golosino',
+            'Mahky M. Anobling',
+            'Ciara Bryn A. Magbanua',
+        ],
+    },
+    {
+        title: 'Candle Sponsors',
+        layout: 'pairs',
+        entries: [['Dilliam B. Pabelonio Jr.', 'Katrina F. Pabelonio']],
+    },
+    {
+        title: 'Cord Sponsors',
+        layout: 'pairs',
+        entries: [['Sheindy N. Bote', 'John Michael A. Bote']],
+    },
+    {
+        title: 'Veil Sponsors',
+        layout: 'pairs',
+        entries: [['Aljonmar B. Golosino', 'Riza Jane T. Golosino']],
+    },
+    {
+        title: 'Worship Team',
+        entries: [
+            'Joshua N. Navarro',
+            'Jay Sayde Mendoza',
+            'Serge Elmedulan',
+            'Jerome Q. Pingkian',
+            'Adrian Niel A. Macalisang',
+            'Joshua Suico',
+            'Jaybe Joromo',
+        ],
+    },
+    {
+        title: 'Principal Sponsors',
+        layout: 'pairs',
+        entries: [
+            ['Mr. Jay C. Ces', 'Mrs. Meredith M. Ces'],
+            ['Mr. Freddie Castelo', 'Mrs. Jerah Mae C. Castelo'],
+            ['Mr. Dexter Largo', 'Mrs. Joy C. Largo'],
+            ['Mr. Ryan Taculod', 'Mrs. Jenny Rose C. Taculod'],
+            ['', 'Mrs. Melchora B. Lector'],
+            ['Mr. Veronico Balaba', 'Mrs. Jona Balaba'],
+            ['Mr. Ritche Niñal', 'Mrs. Cristina B. Niñal'],
+            ['', 'Mrs. Guillerma B. Gagate'],
+            ['', 'Mrs. Neneth Novino'],
+            ['Mr. Sevirino Balaba', 'Mrs. Balaba'],
+            ['Mr. Sherwin Bado', 'Mrs. Mitzie Bado'],
+            ['Mr. Jun Villanura', 'Mrs. Elaine Villanura'],
+            ['Mr. Glucie B. Villaruel', 'Mrs. Jarell Villaruel'],
+            ['Mr. Rodel L. Leong', 'Mrs. Apol Jean P. Leong'],
+            ['Mr. Ronilo T. Desucatan', 'Ms. Clerdilyn L. Leong'],
+            ['Mr. Arnold O. Anobling', 'Mrs. Marilyn M. Anobling'],
+            ['Mr. Mark Anthony O. Anobling', 'Mrs. Malou M. Anobling'],
+            ['Mr. Ariel O. Anobling', 'Mrs. Charlyn Diones M. Anobling'],
+            ['Mr. Alan S. Pangarungan', 'Mrs. Star S. Pangarungan'],
+            ['Mr. Marjun G. Yabo', 'Mrs. Yabo'],
+            ['Hermogenes D. Wapin', 'Mrs. Joyce B. Wapin'],
+            ['Mr. Ruben C. Rojo', 'Mrs. Helen A. Rojo'],
+            ['Mr. Nellin C. Macalisang', 'Mrs. Merryan A. Macalisang'],
+            ['Mr. Roland B. Ruiz', 'Mrs. Erlyn C. Ruiz'],
+            ['Mr. Kyle T. Noval', 'Mrs. Jill S. Noval'],
+        ],
+    },
+];
+
+function EntourageDialog({ open, onOpenChange }: EntourageDialogProps) {
+    return (
+        <Dialog open={open} onOpenChange={onOpenChange}>
+            <DialogContent
+                className="max-h-[90vh] overflow-y-auto border-[#1b1b18]/15 bg-[#f3ece7] sm:max-w-2xl"
+                style={{ fontFamily: "'Cormorant Garamond', serif" }}
+            >
+                <DialogHeader className="text-center sm:text-center">
+                    <DialogTitle
+                        className="text-center text-5xl font-normal text-[#1b1b18] sm:text-6xl"
+                        style={{ fontFamily: "'Italianno', cursive" }}
+                    >
+                        The Entourage
+                    </DialogTitle>
+                    <DialogDescription className="text-center text-xs tracking-[0.25em] text-[#1b1b18]/80 uppercase sm:text-sm">
+                        With gratitude to those joining us
+                    </DialogDescription>
+                </DialogHeader>
+
+                <div className="mt-4 space-y-8 border-t border-[#1b1b18]/15 pt-6">
+                    {entourageSections.map((section) => (
+                        <EntourageSectionBlock
+                            key={section.title}
+                            section={section}
+                        />
+                    ))}
+                </div>
+
+                <div className="mt-4 text-center">
+                    <button
+                        type="button"
+                        onClick={() => onOpenChange(false)}
+                        className="rounded-full border border-[#1b1b18] bg-[#1b1b18] px-8 py-2.5 text-xs tracking-[0.3em] text-[#f3ece7] uppercase transition hover:bg-transparent hover:text-[#1b1b18]"
+                    >
+                        Close
+                    </button>
+                </div>
+            </DialogContent>
+        </Dialog>
+    );
+}
+
+function EntourageSectionBlock({ section }: { section: EntourageSection }) {
+    return (
+        <section className="space-y-3 text-center">
+            <h3
+                className="text-xs tracking-[0.35em] text-[#1b1b18] uppercase sm:text-sm"
+                style={{ fontFamily: "'Tenor Sans', serif" }}
+            >
+                {section.title}
+            </h3>
+            {section.layout === 'pairs' ? (
+                <ul className="space-y-2 text-[0.95rem] text-[#1b1b18]/90 sm:text-base">
+                    {section.entries.map((entry, idx) => {
+                        const pair = Array.isArray(entry)
+                            ? entry
+                            : [entry, ''];
+                        return (
+                            <li
+                                key={idx}
+                                className="grid grid-cols-1 gap-1 sm:grid-cols-2 sm:gap-6"
+                            >
+                                <span className="sm:text-right">
+                                    {pair[0] || ' '}
+                                </span>
+                                <span className="sm:text-left">
+                                    {pair[1] || ' '}
+                                </span>
+                            </li>
+                        );
+                    })}
+                </ul>
+            ) : (
+                <ul className="space-y-1 text-[0.95rem] text-[#1b1b18]/90 sm:text-base">
+                    {section.entries.map((entry, idx) => (
+                        <li key={idx}>
+                            {typeof entry === 'string'
+                                ? entry
+                                : entry.filter(Boolean).join(' · ')}
+                        </li>
+                    ))}
+                </ul>
+            )}
+        </section>
     );
 }
