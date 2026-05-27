@@ -478,6 +478,7 @@ const entourageSections: EntourageSection[] = [
             ['', 'Mrs. Guillerma B. Gagate'],
             ['', 'Mrs. Neneth Novino'],
             ['Mr. Sevirino Balaba', 'Mrs. Balaba'],
+            ['Mr. Sonny Tiu', 'Mrs. Melanie Tiu'],
             ['Mr. Sherwin Bado', 'Mrs. Mitzie Bado'],
             ['Mr. Jun Villanura', 'Mrs. Elaine Villanura'],
             ['Mr. Glucie B. Villaruel', 'Mrs. Jarell Villaruel'],
