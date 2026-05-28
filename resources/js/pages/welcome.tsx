@@ -472,6 +472,7 @@ const entourageSections: EntourageSection[] = [
             ['Mr. Freddie Castelo', 'Mrs. Jerah Mae C. Castelo'],
             ['Mr. Dexter Largo', 'Mrs. Joy C. Largo'],
             ['Mr. Ryan Taculod', 'Mrs. Jenny Rose C. Taculod'],
+            ['Mr. Elton John Tan', 'Mrs. Shennie E. Tan'],
             ['', 'Mrs. Melchora B. Lector'],
             ['Mr. Veronico Balaba', 'Mrs. Jona Balaba'],
             ['Mr. Ritche Niñal', 'Mrs. Cristina B. Niñal'],
